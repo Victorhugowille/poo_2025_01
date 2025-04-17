@@ -35,6 +35,31 @@ public class Compromisso
         //     throw new Exception("Data ainda não informada");
         // }
     }
+    private TimeSpan _hora;
+
+    public String Hora
+    {
+      get { return _hora.ToString(); }
+        set
+        {
+            _validarHoraInformada(value);
+            _validarHoraValidaParaCompromisso();
+        }
+    }
+    private void _validarHoraInformada(string hora) {
+       if(!TimeSpan.TryParse(hora,
+        out _hora))
+        {
+          throw new Exception($"Hora {hora} Inválida!");
+        }
+}
+
+private void _validarHoraValidaParaCompromisso() {
+    TimeSpan limite = new TimeSpan(18,0,59);
+        if (TimeSpan.Compare(_hora,limite) == -1) {
+            throw new Exception($"Hora {_hora} é inferior a 18:00.");
+        }
+    }
     // private TimeSpan _hora;
     // public TimeSpan Hora
     // {
